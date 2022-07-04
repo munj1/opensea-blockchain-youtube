@@ -8,6 +8,7 @@ import Header from "../../components/Header";
 import { AiOutlineInstagram, AiOutlineTwitter } from "react-icons/ai";
 import { CgWebsite } from "react-icons/cg";
 import { HiDotsVertical } from "react-icons/hi";
+import NFTCard from "../../components/NFTCard";
 
 // import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 
@@ -113,9 +114,118 @@ const Collection = () => {
 
   useEffect(() => {
     fetchCollectionData();
-  }, [collectionId]);
+  }, [provider]);
 
-  return <></>;
+  return (
+    <div className="overflow-hidden">
+      <Header />
+      <div className={style.bannerImageContainer}>
+        <img
+          className={style.bannerImage}
+          alt="banner"
+          src={
+            collection?.bannerImageUrl
+              ? collection.bannerImageUrl
+              : "https://via.placeholder.com/200"
+          }
+        />
+      </div>
+      <div className={style.infoContainer}>
+        <div className={style.midRow}>
+          <img
+            className={style.profileImg}
+            alt="profile image"
+            src={
+              collection?.imageUrl
+                ? collection.imageUrl
+                : "https://via.placeholder.com/200"
+            }
+          />
+        </div>
+        <div className={style.endRow}>
+          <div className={style.socialIconsContainer}>
+            <div className={style.socialIconsWrapper}>
+              <div className={style.socialIconsContent}>
+                <div className={style.socialIcon}>
+                  <CgWebsite />
+                </div>
+                <div className={style.divider} />
+                <div className={style.socialIcon}>
+                  <AiOutlineInstagram />
+                </div>
+                <div className={style.divider} />
+                <div className={style.socialIcon}>
+                  <AiOutlineTwitter />
+                </div>
+                <div className={style.divider} />
+                <div className={style.socialIcon}>
+                  <HiDotsVertical />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={style.midRow}>
+          <div className={style.title}>{collection?.title}</div>
+        </div>
+        <div className={style.midRow}>
+          <div className={style.createdBy}>
+            Created by{" "}
+            <span className="text-[#2081e2]">{collection?.creator}</span>
+          </div>
+        </div>
+        <div className={style.midRow}>
+          <div className={style.statsContainer}>
+            <div className={style.collectionStat}>
+              <div className={style.statValue}>{nfts.length}</div>
+              <div className={style.statName}>items</div>
+            </div>
+            <div className={style.collectionStat}>
+              <div className={style.statValue}>
+                {collection?.allOwners ? collection.allOwners.length : ""}
+              </div>
+              <div className={style.statName}>owners</div>
+            </div>
+            <div className={style.collectionStat}>
+              <div className={style.statValue}>
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/628px-Ethereum_logo_2014.svg.png"
+                  alt="eth"
+                  className={style.ethLogo}
+                />
+                {collection?.floorPrice}
+              </div>
+              <div className={style.statName}>floor price</div>
+            </div>
+            <div className={style.collectionStat}>
+              <div className={style.statValue}>
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/628px-Ethereum_logo_2014.svg.png"
+                  alt="eth"
+                  className={style.ethLogo}
+                />
+                {collection?.volumeTraded}.5K
+              </div>
+              <div className={style.statName}>volume traded</div>
+            </div>
+          </div>
+        </div>
+        <div className={style.midRow}>
+          <div className={style.description}>{collection?.description}</div>
+        </div>
+      </div>
+      <div className="flex flex-wrap ">
+        {nfts.map((nftItem, id) => (
+          <NFTCard
+            key={id}
+            nftItem={nftItem}
+            title={collection?.title}
+            listings={listings}
+          />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Collection;
